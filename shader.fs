@@ -1,8 +1,7 @@
-#version 330 core
-
-in vec4 color;
-out vec4 FragColor;
+#version 100
+precision highp float;
+varying vec4 color;
 
 void main() {
-    FragColor = color;
+    gl_FragColor = color;
 }
