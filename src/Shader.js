@@ -1,6 +1,7 @@
 
 class Shader {
-    ID
+    /** @type {WebGLProgram} */
+    program
   
     constructor(vertexPath, fragmentPath, gl) {
       (async () => {
@@ -14,10 +15,10 @@ class Shader {
           fragmentCode = await res.text();
         });
         
-        await console.table(vertexCode,)
-  
+        console.log(vertexCode)
+        console.log(fragmentCode)
+        
         let vertex, fragment;
-        let success;
         
         // vertex Shader
         vertex = gl.createShader(gl.VERTEX_SHADER);
@@ -41,13 +42,13 @@ class Shader {
         }
         // shader Program
         
-        this.ID = gl.createProgram();
-        gl.attachShader(this.ID, vertex);
-        gl.attachShader(this.ID, fragment);
-        gl.linkProgram(this.ID);
+        this.program = gl.createProgram();
+        gl.attachShader(this.program, vertex);
+        gl.attachShader(this.program, fragment);
+        gl.linkProgram(this.program);
         
-        if (!gl.getProgramParameter(this.ID, gl.LINK_STATUS)) {
-          let info = gl.getProgramInfoLog(this.ID);
+        if (!gl.getProgramParameter(this.program, gl.LINK_STATUS)) {
+          let info = gl.getProgramInfoLog(this.program);
           throw `Could not link WebGL program. \n\n${info}`;
         }
     
@@ -58,7 +59,7 @@ class Shader {
     }
   
     use(gl) {
-      gl.useProgram(this.ID);
+      gl.useProgram(this.program);
     }
   }
   
